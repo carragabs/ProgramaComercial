@@ -57,7 +57,7 @@ int main() {
 						cout << "3)-" << endl;
 						cout << "4)-" << endl;
 						cout << "5)-" << endl;
-						cout << "6)-" << endl;
+						cout << "6)-Caja" << endl;
 						cout << "7)-opciones de Usuarios" << endl;
 						cout << "8)-" << endl;
 						cout << "9)-Menu principal" << endl;
@@ -131,10 +131,132 @@ int main() {
 							break;
 						}
 						case 6: {
+							int opcion = 0;
+							Caja miCaja;
+							HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
+							double saldo = 0;
+							double saldoin;
+							vector<producto> pBodega;
+							char respAgregar = ' ';
+							bool cerrar;
+							double saldoAgregado = 0;
+							system("cls");
+							while (opcion != 5)
+							{
+								cout << "MENU DE CAJA" << endl;
+								cout << "------------" << endl << endl;
+								cout << "1) Depositar Saldo en Bandeja y Activar" << endl;
+								cout << "2) Agregar a Saldo " << endl;
+								cout << "3) Facturar producto(s) " << endl;
+								cout << "4) Cerrar Caja" << endl;
+								cout << "5) Volver al Menu Principal" << endl;
+								cout << "Eliga una opcion: ";
+								cin >> opcion;
+								switch (opcion)
+								{
+								case 1:
+									system("cls");
+									if (miCaja.compararSaldoMinimo())
+									{
+										cout << "LA CAJA YA TIENE UNA BANDEJA CON DINERO, DEBE RETIRARLA ANTES." << endl;
+										cout << "DEBE RETIRARLA ANTES." << endl;
+										break;
+									}
 
+									cout << "INGRESE EL SALDO TOTAL DE LA BANDEJA: ";
+									cin >> saldoin;
+									miCaja.actualizarSaldo(saldoin);
+
+									if (miCaja.compararSaldoMinimo())
+									{
+										miCaja.setSaldoInicial(saldoin);
+										cout << "SALDO ACTUALIZADO" << endl;
+										miCaja.infoSaldo();
+										miCaja.marcarAbierta();
+										break;
+									}
+									cout << "EL SALDO TOTAL DEBE SER MAYOR QUE " << miCaja.saldoMinimo << endl;
+									miCaja.reiniciarSaldo();
+									break;
+								case 2:
+									system("cls");
+									if (!miCaja.abierta)
+									{
+										cout << "Debe activar la Caja antes de proceder." << endl;
+										break;
+									}
+									cout << "Ingrese la Cantidad Total a Ingresar: ";
+									cin >> saldoin;
+									//validar que no sea negativo en el try catch
+									cout << "El saldo a Ingresar es parte de las ganancias?(S/N)" << endl;
+									cin >> respAgregar;
+									if (respAgregar == 'S' || respAgregar == 's')
+										miCaja.actualizarGanancias(saldoin);
+									else
+										saldoAgregado += saldoin;
+
+									miCaja.actualizarSaldo(saldoin);
+									miCaja.infoSaldo();
+									cout << "SALDO ACTUALIZADO" << endl;
+									system("pause"); system("cls");
+									break;
+								case 3:
+
+									if (!miCaja.abierta)
+									{
+										system("cls");
+										cout << "Debe activar la Caja antes de proceder." << endl;
+										break;
+									}
+									//cout << "Facturar producto(s) Elegido" << endl;
+									//PRODUCTOS EN BODEGAS
+									pBodega.push_back({ 01,1500,20,"Oreos Docena" , true });
+									pBodega.push_back({ 02,500,1000,"Pollo" , true });
+									pBodega.push_back({ 03,2000,60,"Arroz" , true });
+									pBodega.push_back({ 04,1500,120,"Cereal" , true });
+									pBodega.push_back({ 05,1600,30,"Fanta" , true });
+									miCaja.facturar(pBodega);
+									break;
+								case 4:
+									system("cls");
+									//cout << "Cerrar Caja Elegido" << endl;
+
+									if (!miCaja.abierta)
+									{
+										cout << "Debe activar la Caja antes de proceder." << endl;
+										break;
+									}
+									if (saldoAgregado > 0)
+										cout << "SALDO AGREGADO FUERA DE GANANCIAS: " << saldoAgregado << endl;
+									cerrar = miCaja.cerrarCaja();
+
+									if (!cerrar)
+										break;
+
+									opcion = 5; //Esto hace que se salga al menu principal
+									system("cls");
+									cout << "Ganancias del dia: " << miCaja.getGanancias() << endl; //Se retornan las ganancias para REPORTES
+									miCaja.reiniciarGanancias();
+									cout << "CAJA CERRADA" << endl;
+									break;
+								case 5:
+									system("cls");
+									cout << "Volver Elegido" << endl;
+									break;
+								default:
+									system("cls");
+									cout << "ELIGA UNA DE LAS OPCIONES" << endl;
+									break;
+								}
+								system("pause");
+								system("CLS");
+
+
+							}
 
 							system("PAUSE");
-							break;
+							break;							
+
 						}
 						case 7: {
 							do {
