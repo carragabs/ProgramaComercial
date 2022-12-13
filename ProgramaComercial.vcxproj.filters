@@ -23,5 +23,8 @@
     <ClInclude Include="Users.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Caja.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -130,6 +130,7 @@
     <ClCompile Include="ProgramaComercial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Caja.h" />
     <ClInclude Include="Users.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
